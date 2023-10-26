@@ -109,6 +109,7 @@ class Wordle(private val english: Boolean = true) {
                 printBoard(board.toTypedArray())
             }
             State.LOSS -> {
+                println(output.onRevealWord(word))
                 println(output.onPlayerLose)
                 printBoard(board.toTypedArray())
             }

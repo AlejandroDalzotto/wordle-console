@@ -1,6 +1,6 @@
 package models
 
-class OutputMessage(english: Boolean) {
+class OutputMessage(private val english: Boolean) {
 
     val onInvalidInputSpecialChars =
         if (english) "Please enter a word without special characters or numbers."
@@ -25,4 +25,8 @@ class OutputMessage(english: Boolean) {
     val onPlayerWin =
         if (english) "🟩🟩🟩 Congratulations, you win!! 🟩🟩🟩"
         else "🟩🟩🟩 Felicidades, has ganado!! 🟩🟩🟩"
+
+    fun onRevealWord(word: String): String {
+        return if (english) "The word was: \"$word\"" else "La palabra era: \"$word\""
+    }
 }
