@@ -46,7 +46,6 @@ class Wordle(private val english: Boolean = true) {
         val result = Array<Boolean?>(word.size) { null }
         val unmatched = mutableListOf<Char>()
 
-        // Marcamos las letras en la posición correcta
         for (i in word.indices) {
             if (word[i] == input[i].letter) {
                 result[i] = true
@@ -55,7 +54,6 @@ class Wordle(private val english: Boolean = true) {
             }
         }
 
-        // Procesamos las letras que no están en la posición correcta
         for (i in word.indices) {
             if (result[i] == null && unmatched.contains(input[i].letter)) {
                 result[i] = false
@@ -71,7 +69,6 @@ class Wordle(private val english: Boolean = true) {
         val output = OutputMessage(english)
         val letters = Words.toLettersArray(Words.pickRandomWord())
         val word = String(letters.toCharArray())
-        println(word)
         while (true) {
 
             printBoard(board.toTypedArray())
@@ -113,6 +110,7 @@ class Wordle(private val english: Boolean = true) {
             }
             State.LOSS -> {
                 println(output.onPlayerLose)
+                printBoard(board.toTypedArray())
             }
 
             else -> {}
