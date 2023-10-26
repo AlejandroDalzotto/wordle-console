@@ -43,20 +43,27 @@ class Wordle(private val english: Boolean = true) {
     }
 
     private fun isLetterInWordForIndex(word: CharArray, input: Array<Cell>): Array<Boolean?> {
-        val result = arrayListOf<Boolean?>()
-        for ((i, c) in input.withIndex()) {
-            if (word[i] == c.letter) {
-                result.add(true)
-                continue
+        val result = Array<Boolean?>(word.size) { null }
+        val unmatched = mutableListOf<Char>()
+
+        // Marcamos las letras en la posición correcta
+        for (i in word.indices) {
+            if (word[i] == input[i].letter) {
+                result[i] = true
+            } else {
+                unmatched.add(word[i])
             }
-            if (word.contains(c.letter)) {
-                result.add(false)
-                continue
-            }
-            result.add(null)
         }
 
-        return result.toTypedArray()
+        // Procesamos las letras que no están en la posición correcta
+        for (i in word.indices) {
+            if (result[i] == null && unmatched.contains(input[i].letter)) {
+                result[i] = false
+                unmatched.remove(input[i].letter)
+            }
+        }
+
+        return result
     }
 
     fun play() {
@@ -64,7 +71,7 @@ class Wordle(private val english: Boolean = true) {
         val output = OutputMessage(english)
         val letters = Words.toLettersArray(Words.pickRandomWord())
         val word = String(letters.toCharArray())
-
+        println(word)
         while (true) {
 
             printBoard(board.toTypedArray())
