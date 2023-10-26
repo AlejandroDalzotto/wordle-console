@@ -19,12 +19,12 @@ class OutputMessage(private val english: Boolean) {
         else "Por favor, ingresa una palabra de cinco letras: "
 
     val onPlayerLose =
-        if (english) "🟥🟥🟥 You lose, thanks for playing 🟥🟥🟥"
-        else "🟥🟥🟥 Has perdido, gracias por jugar 🟥🟥🟥"
+        if (english) "🟥 You lose, thanks for playing 🟥"
+        else "🟥 Has perdido, gracias por jugar 🟥"
 
     val onPlayerWin =
-        if (english) "🟩🟩🟩 Congratulations, you win!! 🟩🟩🟩"
-        else "🟩🟩🟩 Felicidades, has ganado!! 🟩🟩🟩"
+        if (english) "🟩 Congratulations, you win!! 🟩"
+        else "🟩 Felicidades, has ganado!! 🟩"
 
     fun onRevealWord(word: String): String {
         return if (english) "The word was: \"$word\"" else "La palabra era: \"$word\""
