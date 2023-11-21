@@ -1,10 +1,7 @@
 package core
 
 import data.Words
-import models.Cell
-import models.Color
-import models.OutputMessage
-import models.State
+import models.*
 import utils.isValidInput
 
 class Wordle(private val english: Boolean = true) {
@@ -39,7 +36,7 @@ class Wordle(private val english: Boolean = true) {
     }
 
     private fun renderLetterCell(letter: Char, color: Color = Color.WHITE) {
-        print("${color.dir}[$letter]${Color.RESET.dir}")
+        print("${color.dir}[$letter]${Color.WHITE.dir}")
     }
 
     private fun isLetterInWordForIndex(word: CharArray, input: Array<Cell>): Array<Boolean?> {
@@ -65,16 +62,16 @@ class Wordle(private val english: Boolean = true) {
     }
 
     fun play() {
-
+        val keyboard = Keys()
         val output = OutputMessage(english)
         val letters = Words.toLettersArray(Words.pickRandomWord())
         val word = String(letters.toCharArray())
         while (true) {
-
             printBoard(board.toTypedArray())
-
-            print(output.onUserInputEvent)
-            val input = readln()
+            println("-".repeat(35))
+            keyboard.printKeys()
+            print("\n${output.onUserInputEvent}")
+            val input = readln().lowercase()
 
             if (!isValidInput(input, output)) {
                 continue
@@ -84,9 +81,18 @@ class Wordle(private val english: Boolean = true) {
             val result = isLetterInWordForIndex(letters.toCharArray(), board[attempt])
             result.forEachIndexed { i, it ->
                 when (it) {
-                    true -> board[attempt][i].color = Color.GREEN
-                    false -> board[attempt][i].color = Color.YELLOW
-                    else -> board[attempt][i].color = Color.RESET
+                    true -> {
+                        board[attempt][i].color = Color.GREEN
+                        keyboard.discoverKey(board[attempt][i].letter, KeyState.CORRECT)
+                    }
+                    false -> {
+                        board[attempt][i].color = Color.YELLOW
+                        keyboard.discoverKey(board[attempt][i].letter, KeyState.INCORRECT)
+                    }
+                    else -> {
+                        board[attempt][i].color = Color.RESET
+                        keyboard.discoverKey(board[attempt][i].letter, KeyState.NULL)
+                    }
                 }
             }
 

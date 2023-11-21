@@ -26,7 +26,7 @@ class Words {
                     "icono", "igual", "rabia",
                     "reloj", "junio", "justo",
                     "alzar", "bache", "cazar",
-                    "dócil", "enano", "fobia",
+                    "letal", "enano", "fobia",
                     "gente", "hongo", "jugar",
                     "abajo", "abano", "abeja",
                     "abeto", "abiso", "abono",
